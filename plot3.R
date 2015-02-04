@@ -1,5 +1,5 @@
 ## Exploratory Data Analysis Project 1
-## Plot 3 - Global Active Power for February 1 and 2, 2007
+## Plot 3 - Energy Sub Metering for February 1 and 2, 2007
 
 # Be sure we're in the right directory
 getwd()
@@ -51,15 +51,12 @@ png("plot3.png", width = 480, height = 480)
 #par(bg="transparent")
 
 # Plot to the open device
-#plot(two_days_df$DateTime, two_days_df$Sub_metering_1, type="s", col="black", xlab="", ylab="")
-#plot(two_days_df$DateTime, two_days_df$Sub_metering_2, type="s", col="red", xlab="", ylab="")
-#plot(two_days_df$DateTime, two_days_df$Sub_metering_3, type="s", col="blue", xlab="", ylab="")
-
-with(two_days_df, plot(DateTime, Sub_metering_1, type="s", col="black"))
+with(two_days_df, plot(DateTime, Sub_metering_1, type="s", col="black", xlab="", ylab="Energy sub metering"))
 with(two_days_df, lines(DateTime, Sub_metering_2, type="s", col="red"))
 with(two_days_df, lines(DateTime, Sub_metering_3, type="s", col="blue"))
-legend("topright", pch=1, col=c("black","red","blue"), legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
-#?legend
+
+# Add the legend
+legend("topright", lty=c(1,1,1), col=c("black","red","blue"), legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
 
 # Close the device
 dev.off()
