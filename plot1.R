@@ -4,17 +4,42 @@
 # Be sure we're in the right directory
 getwd()
 
-# Import data
+# -----------------------------------------------
+# Get a two-day subset of the data
+# -----------------------------------------------
 
-# Take care to convert ? values to NA
-big_table <- read.table("household_power_consumption.txt", header=TRUE, sep=";", na.strings="?")
+# Open connection to the large text file
+filecon <- file("household_power_consumption.txt")
+open(filecon)
 
-# I like SQL syntax so I'll load the sqldf library
-install.packages("sqldf")
-library(sqldf)
+# Read the first line from the connection, which has the column names
+incoming_first_row = readLines(filecon, n = 1)
 
-# Copy the data for the first two days of February 2007 into a smaller table
-small_table <- sqldf("select * from big_table where Date in ('2/2/2007', '1/2/2007')", row.names = TRUE)
+# Split it apart by semi-colons
+incoming_col_names = strsplit(incoming_first_row, ";", fixed = TRUE)  # Results in a list
+#class(incoming_col_names)
+# Convert the list to a vector for later use
+col_name_vector <- unlist(incoming_col_names)
+#class(col_name_vector)
+
+# Read only the rows that start with Feb 1 or 2, 2007, getting values rather than row nums
+two_days_raw = grep("^1/2/2007|^2/2/2007", readLines(filecon), value = TRUE)
+#head(two_days_raw)
+
+# Finished with the file connection so close it
+close(filecon)
+
+# Separate the two days raw data by semi-colon into a data frame
+two_days_df <- read.table(text = two_days_raw, sep = ";")
+#head(two_days_df)
+
+# Apply the column names previously saved
+colnames(two_days_df) <- col_name_vector
+#head(two_days_df)
+#class(two_days_df)
+#summary(two_days_df)
+#head(two_days_df)
+#tail(two_days_df)
 
 # Since this plot doesn't use date/time, manipulation isn't necessary
 # but I've put the code here, commented out, for future use
@@ -24,7 +49,9 @@ small_table <- sqldf("select * from big_table where Date in ('2/2/2007', '1/2/20
 # Concatenate Date and Time into one field called DateTime
 #small_table$DateTime <- strptime(paste(small_table$Date, small_table$Time), "%Y-%m-%d %H:%M:%S")
 
+# -----------------------------------------------
 # Plot the histogram
+# -----------------------------------------------
 
 # Open PNG plot device with desired name and image dimensions
 png("plot1.png", width = 480, height = 480)
@@ -33,11 +60,10 @@ png("plot1.png", width = 480, height = 480)
 #par(bg="transparent")
 
 # Plot the histogram to the open device
-hist(small_table$Global_active_power, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
+hist(two_days_df$Global_active_power, col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
 
 # Close the device
 dev.off()
 
 # Let the user know that the plot file has been generated
 print("Plot file has been generated...")
-
