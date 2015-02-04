@@ -33,14 +33,6 @@ two_days_df <- read.table(text = two_days_raw, sep = ";")
 # Apply the column names previously saved
 colnames(two_days_df) <- col_name_vector
 
-# Since this plot doesn't use date/time, manipulation isn't necessary
-# but I've put the code here, commented out, for future use
-# Convert the Date column to a date field
-#small_table$Date <- as.Date(small_table$Date, "%d/%m/%Y")
-#
-# Concatenate Date and Time into one field called DateTime
-#small_table$DateTime <- strptime(paste(small_table$Date, small_table$Time), "%Y-%m-%d %H:%M:%S")
-
 # -----------------------------------------------
 # Plot the histogram
 # -----------------------------------------------
