@@ -17,29 +17,21 @@ incoming_first_row = readLines(filecon, n = 1)
 
 # Split it apart by semi-colons
 incoming_col_names = strsplit(incoming_first_row, ";", fixed = TRUE)  # Results in a list
-#class(incoming_col_names)
+
 # Convert the list to a vector for later use
 col_name_vector <- unlist(incoming_col_names)
-#class(col_name_vector)
 
 # Read only the rows that start with Feb 1 or 2, 2007, getting values rather than row nums
 two_days_raw = grep("^1/2/2007|^2/2/2007", readLines(filecon), value = TRUE)
-#head(two_days_raw)
 
 # Finished with the file connection so close it
 close(filecon)
 
 # Separate the two days raw data by semi-colon into a data frame
 two_days_df <- read.table(text = two_days_raw, sep = ";")
-#head(two_days_df)
 
 # Apply the column names previously saved
 colnames(two_days_df) <- col_name_vector
-#head(two_days_df)
-#class(two_days_df)
-#summary(two_days_df)
-#head(two_days_df)
-#tail(two_days_df)
 
 # Since this plot doesn't use date/time, manipulation isn't necessary
 # but I've put the code here, commented out, for future use
