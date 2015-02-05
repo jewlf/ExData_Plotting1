@@ -45,7 +45,7 @@ two_days_df$DateTime <- strptime(paste(two_days_df$Date, two_days_df$Time), "%Y-
 # -----------------------------------------------
 
 # Open PNG plot device with desired name and image dimensions
-png("plot4a.png", width = 480, height = 480)
+png("plot4.png", width = 480, height = 480)
 
 # If I wanted the background to be transparent, I would enable:
 #par(bg="transparent")
