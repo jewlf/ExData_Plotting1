@@ -51,9 +51,14 @@ png("plot3.png", width = 480, height = 480)
 #par(bg="transparent")
 
 # Plot to the open device
-with(two_days_df, plot(DateTime, Sub_metering_1, type="s", col="black", xlab="", ylab="Energy sub metering"))
-with(two_days_df, lines(DateTime, Sub_metering_2, type="s", col="red"))
-with(two_days_df, lines(DateTime, Sub_metering_3, type="s", col="blue"))
+plot(two_days_df$DateTime, two_days_df$Sub_metering_1, type="s", col="black", xlab=NA, ylab="Energy sub metering")
+lines(two_days_df$DateTime, two_days_df$Sub_metering_2, type="s", col="red")
+lines(two_days_df$DateTime, two_days_df$Sub_metering_3, type="s", col="blue")
+
+# Alternate way to call plot/lines, may be useful later
+#with(two_days_df, plot(DateTime, Sub_metering_1, type="s", col="black", xlab=NA, ylab="Energy sub metering"))
+#with(two_days_df, lines(DateTime, Sub_metering_2, type="s", col="red"))
+#with(two_days_df, lines(DateTime, Sub_metering_3, type="s", col="blue"))
 
 # Add the legend
 legend("topright", lty=c(1,1,1), col=c("black","red","blue"), legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
